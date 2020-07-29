@@ -46,6 +46,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    
+    //Kiểu tra và xác thực thông tin tài khoản
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -61,6 +63,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+    //Lưu thông tin tài khoản vào database
     protected function create(array $data)
     {
         return User::create([
