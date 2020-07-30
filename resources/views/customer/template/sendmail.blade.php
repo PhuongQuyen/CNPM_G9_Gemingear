@@ -23,7 +23,7 @@
                                                     xác nhận địa chỉ email của Quý khách như sau:
                                                     Email: {{$e_message['email']}}
                                                     Nếu thông tin trên chính xác, Quý khách vui lòng xác nhận theo đường
-                                                    dẫn sau:</p>
+                                                    dẫn sau và tiến hành đăng nhập:</p>
                                             </div>
                                         </td>
                                     </tr>
