@@ -125,3 +125,67 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="forgotModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="col-md-5 mx-auto">
+            <div class="myform form ">
+                <div class="logo mb-3">
+                    <div class="col-md-12 text-center">
+                        <h4 style="font-family: serif;">Đặt lại mật khẩu?</h4>
+                    </div>
+                </div>
+                <form action="" method="post" id="forgotForm" name="login">
+                    @csrf
+                    <div class="form-group col-md-12">
+                        <label for="exampleInputEmail1">Địa chỉ email</label>
+                        <input type="email" name="email" id="emailSendtoken" class="form-control emailSendtoken"
+                               aria-describedby="emailHelp"
+                               placeholder="Địa chỉ email">
+                    </div>
+                    <div class="col-md-12 text-center ">
+                            <button type="submit" id="buttonsubmit" class=" btn btn-block mybtn btn-primary tx-tfm"
+                                    data-target="#forgotModal"  data-dismiss="modal"  data-toggle="modal" >Gửi
+                            </button>
+{{--                        </a>--}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle3"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="col-md-5 mx-auto">
+            <div class="myform form ">
+                <div class="logo mb-3">
+                    <div class="col-md-12 text-center">
+                        <h4 style="font-family: serif;">Đặt lại mật khẩu</h4>
+                    </div>
+                </div>
+                <form action="customer/reset-password" method="post"  >
+                    @csrf
+                    <div class="form-group col-md-12">
+                        <label for="exampleInputEmail1">Mật khẩu mới</label>
+                        <input type="password" name="password" class="form-control" id="password" aria-describedby="emailHelp"
+                               placeholder="Mật khẩu mới">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="exampleInputEmail1">Nhập lại mật khẩu</label>
+                        <input type="password" id="confirm_password" name="re_password" class="form-control"
+                               aria-describedby="emailHelp" placeholder="Nhập lại mật khẩu">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="exampleInputEmail1">Nhập token</label>
+                        <input type="token" name="token" class="form-control"
+                               aria-describedby="emailHelp" placeholder="Nhập token">
+                    </div>
+                    <div class="col-md-12 text-center ">
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
