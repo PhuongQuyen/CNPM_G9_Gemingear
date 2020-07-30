@@ -19,6 +19,36 @@ class Customer extends Controller
         $banner = $this->banner_model->getInfo();
         return view('customer.home', ['banner' => $banner]);
     }
+	public function login(Request $request)
+    {
+        //Lấy ra thông tin trong form đăng nhập trừ _token (username,password)
+        $data = $request->except('_token');
+        // Sử dụng thư viện Auth của laravel để kiểm tra username password trong database
+        if (Auth::attempt($data)) {  //Trả về true hoặc false
+            $data = Auth::user();//Nếu đúng lấy ra thông tin user
+            if ($data->active == 1) {//Kiểm tra user có active nếu active = 1 redirec về trang chủ
+//                session flash duy nhta trong 1 route, load lai trang thi mat
+                $request->session()->flash('login', 'Đăng nhập thành công');
+                return redirect('/');
+            } else {
+                //User chưa active trả về lỗi
+                Auth::logout();
+                $request->session()->flash('fail', 'Đăng nhập thất bại');
+                return redirect('/');
+            }
+        } else {
+//            Auth::logout();
+            $request->session()->flash('fail', 'Đăng nhập thất bại');
+            return redirect('/');
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
+
     
     //Đăng ký
     public function signup(Request $res)
