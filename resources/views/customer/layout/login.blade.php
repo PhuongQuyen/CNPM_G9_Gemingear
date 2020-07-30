@@ -8,8 +8,8 @@
                         <h1 style="font-family: serif;">Đăng nhập</h1>
                     </div>
                 </div>
-                <form method="post" name="login">
-                   
+                <form action="/customer/login" method="post" name="login">
+                      @csrf
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Địa chỉ email</label>
                         <input type="email" name="email" required class="form-control" aria-describedby="emailHelp"
