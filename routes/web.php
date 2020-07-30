@@ -14,3 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'Customer@index');
+// User submit form login sẽ gọi function login trong Customer Controller
+Route::post('customer/login', 'Customer@login');
+Route::get('customer/logout', 'Customer@logout');
