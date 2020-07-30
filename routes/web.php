@@ -17,3 +17,7 @@ Route::get('/', 'Customer@index');
 // User submit form login sẽ gọi function login trong Customer Controller
 Route::post('customer/login', 'Customer@login');
 Route::get('customer/logout', 'Customer@logout');
+//route khi ng dùng submit email để reset pass
+Route::post('customer/resetpassword', 'Customer@sendMailForgotPass');
+////route khi người dùng nhập  password mới confirm-pass và token 
+Route::post('customer/reset-password', 'Customer@reset');
