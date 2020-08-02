@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <p class="text-center">
-                                    <a href="#" style="background-color:red;color:white;"
+                                    <a href="auth/google" style="background-color:red;color:white;"
                                        class="google btn mybtn"><i class="fa fa-google">
                                         </i>oogle
                                     </a>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <p class="text-center">
-                                    <a href="#" style="background-color:#0069d9;color:white;"
+                                    <a href="auth/facebook" style="background-color:#0069d9;color:white;"
                                        class="google btn mybtn"><i class="fa fa-facebook">
                                         </i>acebook
                                     </a>
