@@ -20,6 +20,15 @@ Route::post('customer/signup', 'Customer@signup');
 Route::get('customer/update/{email}', 'Customer@update');
 // User submit form login sẽ gọi function login trong Customer Controller
 Route::post('customer/login', 'Customer@login');
+/* Route login facebook gg */
+// nhan vao provider de xac dinh la gg hay facebook
+Route::get('auth/{provider}','Signin@redirectToProvider');
+
+Route::get('auth/{provider}/callback','Signin@handleProviderCallback');
+Route::get('customer', function () {
+    return view('customer.home');
+});
+
 Route::get('customer/logout', 'Customer@logout');
 //route khi ng dùng submit email để reset pass
 Route::post('customer/resetpassword', 'Customer@sendMailForgotPass');
