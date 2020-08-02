@@ -105,7 +105,7 @@ class Customer extends Controller
         if ($passwordReset) {
 //            $user->notify(new Customer($passwordReset->token));
             Mail::to($request->input('email'))->send(new SendTokenMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
-            return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn']);
+            return response()->json(['success' => 'Gửi mã xác nhận thành công vui lòng kiểm tra email của bạn']);
 
         }
         return response()->json([
