@@ -80,7 +80,7 @@ class Customer extends Controller
 
     	if ($this->users->save()) {
     		Mail::to($res->input('email'))->send(new SendMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
-    		return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn']);
+    		return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn <a href="https://mail.google.com/mail/u/0/#inbox">Tại đây</a>']);
     	} else {
     		return response()->json(['success' => 'Đăng ký thất bại! Xin kiểm tra lại']);
     	}
