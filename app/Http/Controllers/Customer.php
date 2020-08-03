@@ -70,13 +70,13 @@ class Customer extends Controller
         $this->users->password = bcrypt($res->input('password'));
         $this->users->active = '0'; //email chưa xác thực mặc định active=0, khi đã xác thực được email thì cập nhật active=1
         $this->users->role = 'user'; //quyền mặc định là user
-        //Khởi tạo nội dung mail để gửi mail xác thực email
+        //Đóng gói những thành phần chuẩn bị cho gửi mail xác thực
         $message = array(
             'name' => $res->input('last_name') . ' ' . $res->input('first_name'),
             'link' => $res->root() . '/customer/update/' . $res->input('email'),
             'email' => $res->input('email'),
         );
-        //Lưu thông tin tạm thời mà hiện thị thông tin yêu cầu xác nhận email
+        //Lưu thông tin tạm thời mà hiện thị thông tin yêu cầu xác thực email
         if ($this->users->save()) {
             Mail::to($res->input('email'))->send(new SendMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
             return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn <a href="https://mail.google.com/mail/u/0/#inbox">Tại đây</a>']);
