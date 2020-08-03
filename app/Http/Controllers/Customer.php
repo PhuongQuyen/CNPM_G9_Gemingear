@@ -145,12 +145,4 @@ class Customer extends Controller
     		return redirect()->back();
     	}
     }
-    //Kiểm tra password
-    private function messages() {
-    	return [
-    			'password.required'     => 'Password chứa ít nhất 8 ký tự',
-    			're_password.required' => 'Password không trùng khớp'
-    	];
-    }
-
 }
