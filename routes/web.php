@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', 'Customer@index');
-
+//Đăng ký tài khoản
 Route::post('customer/signup', 'Customer@signup');
+//Kích hoạt tài khoản sau khi xác thực email
 Route::get('customer/update/{email}', 'Customer@update');
 // User submit form login sẽ gọi function login trong Customer Controller
 Route::post('customer/login', 'Customer@login');

@@ -51,40 +51,40 @@ class Customer extends Controller
 
 
     //Đăng ký
-    public function signup(Request $res)
+       public function signup(Request $res)
     {
-    	$validator = Validator::make($res->all(), [
-    			'email' => 'unique:users||required',
-    			'last_name' => 'required',
-    			'first_name' => 'required',
-    			//            'password' => 'required|min:8',
-    	//            're_password' => 'min:8|same:password'
-    	],
-    			[
-    					'unique' => ':attribute đã tồn tại',
-    					//                'require' => ':attribute d',
-    			]);
-    	if ($validator->fails()) {
-    		return response()->json(['errors' => $validator->errors()->all()]);
-    	}
-    	$this->users->name = $res->input('last_name') . ' ' . $res->input('first_name');
-    	$this->users->email = $res->input('email');
-    	$this->users->password = bcrypt($res->input('password'));
-    	$this->users->active = '0';
-    	$this->users->role = 'user';
-    	$message = array(
-    			'name' => $res->input('last_name') . ' ' . $res->input('first_name'),
-    			'link' => $res->root() . '/customer/update/' . $res->input('email'),
-    			'email' => $res->input('email'),
-    	);
-
-    	if ($this->users->save()) {
-    		Mail::to($res->input('email'))->send(new SendMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
-    		return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn <a href="https://mail.google.com/mail/u/0/#inbox">Tại đây</a>']);
-    	} else {
-    		return response()->json(['success' => 'Đăng ký thất bại! Xin kiểm tra lại']);
-    	}
+        //Kiểm tra xem email đã được đăng ký hay chưa
+        $validator = Validator::make($res->all(), [
+            'email' => 'unique:users',
+        ],
+            [
+                'unique' => ':attribute đã tồn tại',
+            ]);
+        //Email tồn tại, hiển thị thông báo
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+        //Lấy thông tin input
+        $this->users->name = $res->input('last_name') . ' ' . $res->input('first_name');
+        $this->users->email = $res->input('email');
+        $this->users->password = bcrypt($res->input('password'));
+        $this->users->active = '0'; //email chưa xác thực mặc định active=0, khi đã xác thực được email thì cập nhật active=1
+        $this->users->role = 'user'; //quyền mặc định là user
+        //Đóng gói những thành phần chuẩn bị cho gửi mail xác thực
+        $message = array(
+            'name' => $res->input('last_name') . ' ' . $res->input('first_name'),
+            'link' => $res->root() . '/customer/update/' . $res->input('email'),
+            'email' => $res->input('email'),
+        );
+        //Lưu thông tin tạm thời mà hiện thị thông tin yêu cầu xác thực email
+        if ($this->users->save()) {
+            Mail::to($res->input('email'))->send(new SendMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
+            return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn <a href="https://mail.google.com/mail/u/0/#inbox">Tại đây</a>']);
+        } else {
+            return response()->json(['success' => 'Đăng ký thất bại! Xin kiểm tra lại']);
+        }
     }
+    
     public function sendMailForgotPass(Request $request)
     {
         // Lấy thông tin user từ email người dùng nhập vào
@@ -145,12 +145,4 @@ class Customer extends Controller
     		return redirect()->back();
     	}
     }
-    //Kiểm tra password
-    private function messages() {
-    	return [
-    			'password.required'     => 'Password chứa ít nhất 8 ký tự',
-    			're_password.required' => 'Password không trùng khớp'
-    	];
-    }
-
 }
