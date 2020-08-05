@@ -68,6 +68,7 @@
     </div>
 </div>
 
+//2. Hệ thống (trang web) hiển thị form thông tin đăng ký 
 <div class="modal fade" id="signupModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle1"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
