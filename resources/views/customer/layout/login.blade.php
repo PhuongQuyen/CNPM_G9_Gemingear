@@ -40,7 +40,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <p class="text-center">
-                                    <a href="#" style="background-color:red;color:white;"
+                                    <a href="auth/google" style="background-color:red;color:white;"
                                        class="google btn mybtn"><i class="fa fa-google">
                                         </i>oogle
                                     </a>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <p class="text-center">
-                                    <a href="#" style="background-color:#0069d9;color:white;"
+                                    <a href="auth/facebook" style="background-color:#0069d9;color:white;"
                                        class="google btn mybtn"><i class="fa fa-facebook">
                                         </i>acebook
                                     </a>
@@ -84,26 +84,30 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Họ và tên đệm</label>
-                                <input type="text" required name="last_name" class="form-control" placeholder="Họ" >
+                                <input type="text" required name="last_name" class="form-control"
+                                       placeholder="Họ" aria-describedby="emailHelp">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tên</label>
-                                <input type="text" name="first_name" required class="form-control"  placeholder="Tên" >
+                                <input type="text" name="first_name" required class="form-control" aria-describedby="emailHelp"
+                                       placeholder="Tên" >
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Địa chỉ email</label>
-                        <input type="email" name="email" class="form-control" placeholder="Địa chỉ email" required>
+                        <input type="email" name="email" class="form-control"
+                               placeholder="Địa chỉ email" required>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Mật khẩu</label>
-                        <input type="password" name="password" id="password_signup" class="form-control" placeholder="Mật khẩu" required>
+                        <input type="password" name="password" id="password_signup" class="form-control"
+                               placeholder="Mật khẩu (ít nhất 8 kí tự)" pattern="[#-z]{8,30}" required>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Nhập lại mật khẩu</label>
                         <input type="password" name="confirm_password-signup" id="confirm_password_signup" class="form-control"
-                               placeholder="Nhập lại mật khẩu" required>
+                               placeholder="Nhập lại mật khẩu" pattern="[#-z]{8,30}" required>
                     </div>
                     <div class="form-group">
                         <p class="text-center">Tôi đồng ý với Bảo mật và Điều khoản hoạt động của Gemingear.vn</p>
@@ -121,6 +125,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="forgotModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
