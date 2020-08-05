@@ -75,3 +75,48 @@
     </section>
     <!--slider area end-->
 @endsection
+<script>
+    $(document).ready(function () {
+
+        var password = document.getElementById("password")
+            , confirm_password = document.getElementById("confirm_password");
+        function validatePassword(){
+            if(password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+        $('#buttonsubmit').click(function (e) {
+            e.preventDefault();
+            var email = $('.emailSendtoken').val();
+            $.ajax(
+                {
+                    url: '/customer/resetpassword',
+                    type: "post",
+                    datatype: "json",
+                    data: {
+                        'email':email
+                    },
+                }).done(function (data) {
+                console.log(data);
+            }).fail(function (jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        })
+    })
+    function getData(page, idcategory, namecategory) {
+        $.ajax(
+            {
+                url: '/home/' + idcategory + '/?page=' + page,
+                type: "get",
+                datatype: "html"
+            }).done(function (data) {
+            $(namecategory + '_add').empty().html(data);
+        }).fail(function (jqXHR, ajaxOptions, thrownError) {
+            alert('No response from server');
+        });
+    }
+</script>
