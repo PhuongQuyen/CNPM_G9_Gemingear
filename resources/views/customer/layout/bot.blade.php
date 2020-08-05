@@ -46,7 +46,7 @@
 </script>
 
 
-//5.	Hệ thống kiểm tra tính hợp lệ
+<!--5. Hệ thống kiểm tra tính hợp lệ-->
 <script>
     $.ajaxSetup({
         headers: {
