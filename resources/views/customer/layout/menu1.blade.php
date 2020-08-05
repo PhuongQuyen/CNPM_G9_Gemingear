@@ -30,6 +30,7 @@
                                     </a>
                                 @else
                                     <li><a href="#" data-toggle="modal" data-target="#modalSignIn">Đăng nhập</a></li>
+                                    //1. Chọn chức năng đăng ký
                                     <li><a href="#" data-toggle="modal" data-target="#signupModalCenter">Đăng ký</a>
                                     </li>
                                 @endif
