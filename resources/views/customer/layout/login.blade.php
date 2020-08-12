@@ -102,29 +102,29 @@
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Họ và tên đệm</label>
                                 <input type="text" required name="last_name" class="form-control"
-                                       placeholder="Họ" aria-describedby="emailHelp">
+                                       placeholder="Họ">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="exampleInputEmail1">Tên</label>
-                                <input type="text" name="first_name" required class="form-control" aria-describedby="emailHelp"
-                                       placeholder="Tên" >
+                                <input type="text" name="first_name" required class="form-control"
+                                       placeholder="Tên">
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="exampleInputEmail1">Địa chỉ email</label>
+                        <label for="exampleInputEmail1">Địa chỉ Email</label>
                         <input type="email" name="email" class="form-control"
-                               placeholder="Địa chỉ email" required>
+                               placeholder="Địa chỉ Email" required>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Mật khẩu</label>
-                        <input type="password" name="password" id="password_signup" class="form-control"
-                               placeholder="Mật khẩu (ít nhất 8 kí tự)" pattern="[#-z]{8,30}" required>
+                        <input type="password" name="password" id="password-signup" class="form-control"
+                               placeholder="Mật khẩu" required>
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Nhập lại mật khẩu</label>
-                        <input type="password" name="confirm_password-signup" id="confirm_password_signup" class="form-control"
-                               placeholder="Nhập lại mật khẩu" pattern="[#-z]{8,30}" required>
+                        <input type="password" name="confirm_password" id="confirm_password-signup" class="form-control"
+                               placeholder="Nhập lại mật khẩu"required>
                     </div>
                     <div class="form-group">
                         <p class="text-center">Tôi đồng ý với Bảo mật và Điều khoản hoạt động của Gemingear.vn</p>
@@ -135,8 +135,8 @@
                     </div>
                     <div class="col-md-12 notify" style="margin-top:10px;margin-bottom:0px;display:none;"></div>
                     <div class="col-md-12" style="margin-top: 15px;">
-                            <hr class="hr-or">
-                        </div>
+                        <hr class="hr-or">
+                    </div>
                 </form>
             </div>
         </div>
