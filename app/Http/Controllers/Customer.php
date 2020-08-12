@@ -9,6 +9,7 @@ class Customer extends Controller
 {
 // khai báo thuộc tính user, banner, và reset_Pass
     protected $users, $banner_model, $reset_Pass;
+
 //  khởi tạo các giá trị cho các thuộc tính
     public function __construct()
     {
@@ -16,6 +17,7 @@ class Customer extends Controller
         $this->banner_model = new Banner_model();
         $this->reset_Pass = new PasswordReset();
     }
+
 // trả về trang chủ
     public function index(Request $request)
     {
@@ -43,14 +45,14 @@ class Customer extends Controller
                 $request->session()->flash('fail', 'Đăng nhập thất bại');
                 return redirect('/');
             }
-        }
-        else {
+        } else {
 // Không tìm thấy user thì thông báo lỗi và trả về trang chủ
             Auth::logout();
             $request->session()->flash('fail', 'Đăng nhập thất bại');
             return redirect('/');
         }
     }
+
 // logout ra khỏi phiên đăng nhập
     public function logout()
     {
@@ -60,23 +62,23 @@ class Customer extends Controller
 
 
     //Đăng ký
-       public function signup(Request $res)
+    public function signup(Request $res)
     {
         //5. Kiểm tra tính hợp lệ của thông tin
         $validator = Validator::make($res->all(), [
-           	'last_name' => 'required',
-          	'first_name' => 'required',
-        	'email' => 'unique:users|required|email',
-        	'password' => 'required|min:8',
-        	'confirm_password' => 'required|same:password',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'email' => 'unique:users|required|email',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required|same:password',
         ],
             [
                 'unique' => ':attribute đã tồn tại',
-            	'email' => ':attribute không đúng định dạng',
+                'email' => ':attribute không đúng định dạng',
                 'required' => ':attribute không được bỏ trống',
-            	'min' => ':attribute phải ít nhất 8 kí tự',
-           	'same' => ':attribute phải trùng khớp với password',
-            	
+                'min' => ':attribute phải ít nhất 8 kí tự',
+                'same' => ':attribute phải trùng khớp với password',
+
             ]);
         //Thông tin không hợp lệ, hiển thị thông báo lỗi
         if ($validator->fails()) {
@@ -103,7 +105,7 @@ class Customer extends Controller
             return response()->json(['success' => 'Đăng ký thất bại! Xin kiểm tra lại']);
         }
     }
-    
+
     public function sendMailForgotPass(Request $request)
     {
         // Lấy thông tin user từ email người dùng nhập vào
@@ -132,36 +134,42 @@ class Customer extends Controller
         ]);
 
     }
+
 //
     public function reset(Request $request)
     {
-        //Lấy token người dùng nhập vào kiểm tra có tồn tại trong database
+        //Lấy token người dùng nhập vào và kiểm tra có tồn tại trong database
         $token = $request->token;
-        $passwordReset = PasswordReset::where('token', $token)->firstOrFail();
-        //Nếu thời gian lớn hơn 12h thì xóa data trong database và trả về lỗi time out
-        if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
+        $passwordReset = PasswordReset::where('token', $token)->first();
+        if ($passwordReset) {
+            //Nếu thời gian hơn 12 tiếng thì xóa token trong database và trả về lỗi time out
+            if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
+                $passwordReset->delete();
+                $request->session()->flash('fail', 'Đổi mật khẩu thất bại');
+                return response()->json([
+                    'message' => 'This password reset token time out.',
+                ], 422);
+            }
+            // Change password
+            $user = User::where('email', $passwordReset->email)->firstOrFail();
+            $newPassword = Hash::make($request->password);
+            $updatePasswordUser = $user->update(['password' => $newPassword]);
             $passwordReset->delete();
-
-            return response()->json([
-                'message' => 'This password reset token time out.',
-            ], 422);
+            $request->session()->flash('success', 'Đổi mật khẩu thành công');
+        }else{
+            $request->session()->flash('fail', 'Đổi mật khẩu thất bại');
         }
-        // Change password
-        $user = User::where('email', $passwordReset->email)->firstOrFail();
-        $newPassword = Hash::make($request->password);
-        $updatePasswordUser = $user->update(['password' => $newPassword]);
-        $passwordReset->delete();
-
         return redirect('/');
     }
+
     //Xác thực email
     public function update($email)
     {
-    	$where = array('email' => $email);
-    	if ($this->users->updateInfo($where, array('active' => 1))) {
-    		return redirect::to('http://127.0.0.1:8000/');
-    	} else {
-    		return redirect()->back();
-    	}
+        $where = array('email' => $email);
+        if ($this->users->updateInfo($where, array('active' => 1))) {
+            return redirect::to('http://127.0.0.1:8000/');
+        } else {
+            return redirect()->back();
+        }
     }
 }
