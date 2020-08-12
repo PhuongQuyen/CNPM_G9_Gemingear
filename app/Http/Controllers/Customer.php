@@ -62,31 +62,41 @@ class Customer extends Controller
     //Đăng ký
        public function signup(Request $res)
     {
-        //Kiểm tra xem email đã được đăng ký hay chưa
+        //5. Kiểm tra tính hợp lệ của thông tin
         $validator = Validator::make($res->all(), [
-            'email' => 'unique:users',
+           	'last_name' => 'required',
+          	'first_name' => 'required',
+        	'email' => 'unique:users|required|email',
+        	'password' => 'required|min:8',
+        	'confirm_password' => 'required|same:password',
         ],
             [
                 'unique' => ':attribute đã tồn tại',
+            	'email' => ':attribute không đúng định dạng',
+                'required' => ':attribute không được bỏ trống',
+            	'min' => ':attribute phải ít nhất 8 kí tự',
+           	'same' => ':attribute phải trùng khớp với password',
+            	
             ]);
-        //Email tồn tại, hiển thị thông báo
+        //Thông tin không hợp lệ, hiển thị thông báo lỗi
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         }
-        //Lấy thông tin input
+        //6. Lưu thông tin tạm thời với trạng thái active = 0 và quyền truy cập mặc định là user
         $this->users->name = $res->input('last_name') . ' ' . $res->input('first_name');
         $this->users->email = $res->input('email');
         $this->users->password = bcrypt($res->input('password'));
-        $this->users->active = '0'; //email chưa xác thực mặc định active=0, khi đã xác thực được email thì cập nhật active=1
-        $this->users->role = 'user'; //quyền mặc định là user
-        //Đóng gói những thành phần chuẩn bị cho gửi mail xác thực
+        $this->users->active = '0';//email chưa xác thực mặc định active=0, khi đã xác thực được email thì cập nhật active=1
+        $this->users->role = 'user';//quyền mặc định là user
+        //7.1 Tạo nội dung message xác nhận kích hoạt tài khoản với đường dẫn tới funcition update
         $message = array(
             'name' => $res->input('last_name') . ' ' . $res->input('first_name'),
             'link' => $res->root() . '/customer/update/' . $res->input('email'),
             'email' => $res->input('email'),
         );
-        //Lưu thông tin tạm thời mà hiện thị thông tin yêu cầu xác thực email
+
         if ($this->users->save()) {
+            //7.2 Gửi mail xác nhận kích hoạt và thông báo đăng ký thành công
             Mail::to($res->input('email'))->send(new SendMail('Xác nhận thông tin địa chỉ email tại Gemingear.vn', $message));
             return response()->json(['success' => 'Đăng ký thành công vui lòng kiểm tra email của bạn <a href="https://mail.google.com/mail/u/0/#inbox">Tại đây</a>']);
         } else {
