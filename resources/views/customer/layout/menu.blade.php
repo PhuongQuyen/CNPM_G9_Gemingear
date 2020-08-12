@@ -1,3 +1,6 @@
+<!--header area start-->
+
+<!--Offcanvas menu area start-->
 <div class="off_canvars_overlay">
 
 </div>
@@ -12,10 +15,11 @@
                             <ul>
                                 <li><a href="#"><i class="far fa-question-circle"></i>Trợ giúp</a></li>
                                 <li><a href="#"><i class="fas fa-bell"></i>Thông báo</a></li>
+{{--                                hàm getUser() sẽ lấy user ra, và isset sẽ kiểm tra đã có user hay chưa và kiểu trả về là boolean--}}
                                 @if (isset(getUser()->name))
                                     <a href="#">
+                                        {{--  có user sẽ lấy name user ra và hiển thị thêm Thông tin và Đăng xuất --}}
                                         <li>
-
                                             <a href="#" id="dropdownMenuButton" data-toggle="dropdown"
                                                aria-haspopup="true"
                                                aria-expanded="false">{{getUser()->name}}<i
@@ -26,11 +30,13 @@
                                                     <a class="dropdown-item" href="#">Thông tin</a>
                                                     <a class="dropdown-item" href="/customer/logout">Đăng xuất</a>
                                                 </div>
+                                            </div>
                                         </li>
                                     </a>
                                 @else
+{{--                                    ngược lại là hàm getUser() không tìm thấy được User thì hiện lên Đăng nhập và Đăng ký--}}
+{{--                                1. Nhấn vào Đăng nhập, hệ thống sẽ gọi qua #modalSignIn và hiện thị form Đăng nhập trong login.php --}}
                                     <li><a href="#" data-toggle="modal" data-target="#modalSignIn">Đăng nhập</a></li>
-                                    <!--1. Chọn chức năng đăng ký-->
                                     <li><a href="#" data-toggle="modal" data-target="#signupModalCenter">Đăng ký</a>
                                     </li>
                                 @endif
@@ -240,3 +246,6 @@
         </div>
     </div>
 </header>
+
+
+<!--header area end-->

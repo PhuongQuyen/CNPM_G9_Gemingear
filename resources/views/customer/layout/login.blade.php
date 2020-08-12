@@ -1,4 +1,5 @@
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+{{--2. Khi nhấn vào Đăng nhập, sẽ hiển thị form đăng nhập--}}
+<div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="col-md-5 mx-auto">
@@ -8,23 +9,31 @@
                         <h1 style="font-family: serif;">Đăng nhập</h1>
                     </div>
                 </div>
+{{--                khi nhấn vào button --}}
                 <form action="/customer/login" method="post" name="login">
-                      @csrf
+{{--                    giải quyết vấn đề bảo mật, lưu thông tin vào cookie--}}
+                    @csrf
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Địa chỉ email</label>
+                        {{--                        input email--}}
                         <input type="email" name="email" required class="form-control" aria-describedby="emailHelp"
-                               placeholder="Địa chỉ email">
+                               platyle="color:dodgerblue;" placeholder="Địa chỉ email">
                     </div>
                     <div class="form-group col-md-12">
                         <label for="exampleInputEmail1">Mật khẩu</label>
+{{--                        input mật khẩu--}}
                         <input type="password" name="password" required class="form-control"
                                aria-describedby="emailHelp" placeholder="Mật khẩu">
                     </div>
                     <div class="col-md-12 text-center ">
+{{--                        button Đăng nhập có type submit--}}
+{{--                        Khi nhấn vào button sẽ có action là /customer/login gọi qua route --}}
                         <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Đăng nhập</button>
                     </div>
                     <div class="form-group col-md-12" style="padding-top:5px;">
-                        <p class="text-center">Quên mật khẩu? Nhấn vào<a href="#"
+{{--                        Nếu quên mật khẩu thì nhấn vào đây--}}
+                        <p class="text-center">Quên mật khẩu? Nhấn vào
+                            <a href="#" id="forgotpassword"
                                                                          data-dismiss="modal" data-toggle="modal"
                                                                          data-target="#forgotModalCenter"
                                                                          style="color:dodgerblue;"> đây</a>
@@ -40,15 +49,22 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <p class="text-center">
+{{--                                    route để  định danh Provider là Google--}}
                                     <a href="auth/google" style="background-color:red;color:white;"
-                                       class="google btn mybtn"><i class="fa fa-google">
-                                        </i>oogle
+                                       class="google btn mybtn">
+{{--                                        Icon google
+--}}
+                                        <i class="fa fa-google"></i>oogle
                                     </a>
                                 </p>
                             </div>
                             <div class="col-sm-6">
                                 <p class="text-center">
+                                    {{--                                    route để  định danh Provider là Google--}}
                                     <a href="auth/facebook" style="background-color:#0069d9;color:white;"
+{{--                                       Icon facebook
+
+--}}
                                        class="google btn mybtn"><i class="fa fa-facebook">
                                         </i>acebook
                                     </a>

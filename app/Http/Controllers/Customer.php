@@ -7,42 +7,51 @@ use App\Banner_model;
 
 class Customer extends Controller
 {
-    protected $banner_model;
-
+// khai báo thuộc tính user, banner, và reset_Pass
+    protected $users, $banner_model, $reset_Pass;
+//  khởi tạo các giá trị cho các thuộc tính
     public function __construct()
     {
+        $this->users = new Users();
         $this->banner_model = new Banner_model();
+        $this->reset_Pass = new PasswordReset();
     }
-
+// trả về trang chủ
     public function index(Request $request)
     {
         $banner = $this->banner_model->getInfo();
         return view('customer.home', ['banner' => $banner]);
     }
-	public function login(Request $request)
+
+    public function login(Request $request)
     {
-        //Lấy ra thông tin trong form đăng nhập trừ _token (username,password)
+        // 4. Lấy ra thông tin email, và mật khẩu, trừ _token
         $data = $request->except('_token');
-        // Sử dụng thư viện Auth của laravel để kiểm tra username password trong database
+        // 5. Sử dụng thư viện Auth của laravel để kiểm tra email và password trong database
         if (Auth::attempt($data)) {  //Trả về true hoặc false
-            $data = Auth::user();//Nếu đúng lấy ra thông tin user
+//            tìm thấy user có trong database
+            $data = Auth::user();//Nếu true lấy ra thông tin user
             if ($data->active == 1) {//Kiểm tra user có active nếu active = 1 redirec về trang chủ
 //                session flash duy nhta trong 1 route, load lai trang thi mat
+//                6. Thông báo đăng nhập thành công và trả về trang chủ
                 $request->session()->flash('login', 'Đăng nhập thành công');
                 return redirect('/');
             } else {
                 //User chưa active trả về lỗi
                 Auth::logout();
+//                thông báo đăng nhập thất bại và trả về trang chủ
                 $request->session()->flash('fail', 'Đăng nhập thất bại');
                 return redirect('/');
             }
-        } else {
-//            Auth::logout();
+        }
+        else {
+// Không tìm thấy user thì thông báo lỗi và trả về trang chủ
+            Auth::logout();
             $request->session()->flash('fail', 'Đăng nhập thất bại');
             return redirect('/');
         }
     }
-
+// logout ra khỏi phiên đăng nhập
     public function logout()
     {
         Auth::logout();
