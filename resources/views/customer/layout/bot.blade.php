@@ -46,38 +46,45 @@
 </script>
 
 
-<!--5. Hệ thống kiểm tra tính hợp lệ-->
+{{--Đăng ký--}}
 <script>
+    {{-- giống như csrf ->tạo ra 1 input có value là token và hidden, gg chỉ như vậy   --}}
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
     $(document).ready(function () {
-        $('#form-signup').submit(function (e) {
+        $('#register').click(function (e) {
             e.preventDefault();
+            //Xóa những thông báo trước đó
             $('.alert-danger').remove();
             $('.alert-success').remove();
+            //Tạo ajax kiểm tra thông tin input
             $.ajax({
                 type: "post",
                 url: "/customer/signup",
+                //Lấy thông tin input để truyền qua customer/signup kiểm tra
                 data: {
                     last_name: $("input[name=last_name]").val(),
                     first_name: $("input[name=first_name]").val(),
-                    email:  $("#signupModalCenter input[name=email]").val(),
+                    email: $("#signupModalCenter input[name=email]").val(),
                     password: $("#signupModalCenter input[name=password]").val(),
+                    confirm_password: $("#signupModalCenter input[name=confirm_password]").val(),
                 },
                 dataType: "json",
                 success: function (data) {
-                    if(typeof data.errors !== "undefined"){
-                        jQuery.each(data.errors, function(key, value){
-                  			$('.notify').show();
-                  			$('.notify').append('<div class="alert error-signup alert-danger"><p>'+value+'</p></div>');
-                  	    });
-                    }else{
+                    if (typeof data.errors != "undefined") {
+                    	//Hiển thị thông báo lỗi alert-danger
+                        jQuery.each(data.errors, function (key, value) {
+                            $('.notify').show();
+                            $('.notify').append('<div class="alert error-signup alert-danger"><p>' + value + '</p></div>');
+                        });
+                    } else {
+                    	//Hiển thị thông báo thành công alert-success
+                        console.log(data.success);
                         $('.notify').show();
-                  		$('.notify').append('<div class="alert alert-success"><p>'+data.success+'</p></div>');
+                        $('.notify').append('<div class="alert alert-success"><p>' + data.success + '</p></div>');
                         $("#form-signup")[0].reset();
                     }
                 }
